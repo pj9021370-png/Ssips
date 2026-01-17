@@ -117,15 +117,20 @@ input,select{
 <div class="hero" id="home">
 <div>
   <h1>Text to File Converter</h1>
-  <p>Convert your text into TXT, CSV or PDF instantly.</p>
+  <p>Convert your text into TXT, CSV, PDF, HTML, CSS, JS, PHP, TSX instantly.</p>
 
   <div class="converter" id="converterBox">
     <textarea id="text" placeholder="Type your text here..."></textarea>
-    <input id="name" placeholder="file name (example)">
+    <input id="name" placeholder="file name (without extension)">
     <select id="format">
       <option value="txt">TXT File</option>
       <option value="csv">CSV File</option>
       <option value="pdf">PDF File</option>
+      <option value="html">HTML File</option>
+      <option value="css">CSS File</option>
+      <option value="js">JavaScript File</option>
+      <option value="php">PHP File</option>
+      <option value="tsx">React TSX File</option>
     </select>
     <div class="actions">
       <button onclick="convert()">Convert & Download</button>
@@ -149,15 +154,15 @@ input,select{
 <div class="formats" id="formats">
   <div class="format">
     <div class="badge doc">DOC</div>
-    <p>Text Documents</p>
+    <p>Text & Code Files</p>
   </div>
   <div class="format">
     <div class="badge csv">CSV</div>
-    <p>Spreadsheet Files</p>
+    <p>Spreadsheet Data</p>
   </div>
   <div class="format">
     <div class="badge pdf">PDF</div>
-    <p>Printable Files</p>
+    <p>Printable Documents</p>
   </div>
 </div>
 
@@ -183,35 +188,47 @@ input,select{
 
 <script>
 function convert(){
-  const text=document.getElementById("text").value
-  const name=document.getElementById("name").value||"file"
-  const format=document.getElementById("format").value
+  const text = document.getElementById("text").value;
+  const name = document.getElementById("name").value || "file";
+  const format = document.getElementById("format").value;
 
-  if(text.trim()=="") return alert("Enter text first")
+  if(text.trim() === "") return alert("Enter text first");
 
-  if(format==="pdf"){
-    const {jsPDF}=window.jspdf
-    const pdf=new jsPDF()
-    const lines=pdf.splitTextToSize(text,180)
-    pdf.text(lines,15,20)
-    pdf.save(name+".pdf")
-    return
+  /* PDF */
+  if(format === "pdf"){
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF();
+    const lines = pdf.splitTextToSize(text,180);
+    pdf.text(lines,15,20);
+    pdf.save(name + ".pdf");
+    return;
   }
 
-  let type="text/plain"
-  if(format==="csv") type="text/csv"
+  /* MIME TYPES */
+  let type = "text/plain";
+  if(format === "csv") type = "text/csv";
+  if(format === "html") type = "text/html";
+  if(format === "css") type = "text/css";
+  if(format === "js") type = "text/javascript";
+  if(format === "php") type = "application/x-httpd-php";
+  if(format === "tsx") type = "text/plain";
 
-  const blob=new Blob([text],{type})
-  const url=URL.createObjectURL(blob)
-  const a=document.createElement("a")
-  a.href=url;a.download=name+"."+format
-  document.body.appendChild(a);a.click()
-  document.body.removeChild(a);URL.revokeObjectURL(url)
+  const blob = new Blob([text], { type });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name + "." + format;
+
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 }
 
 function goToConverter(){
-  document.getElementById("converterBox").scrollIntoView({behavior:"smooth"})
-  document.getElementById("text").focus()
+  document.getElementById("converterBox").scrollIntoView({behavior:"smooth"});
+  document.getElementById("text").focus();
 }
 </script>
 
