@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Text to File Converter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+*{box-sizing:border-box;font-family:Inter,Arial;scroll-behavior:smooth}
+body{margin:0;background:#f7faff;color:#0f172a}
+
+/* NAVBAR */
+.nav{
+  background:#fff;padding:16px 70px;display:flex;
+  justify-content:space-between;align-items:center;
+  box-shadow:0 5px 20px rgba(0,0,0,.05);position:sticky;top:0;z-index:9
+}
+.logo{font-weight:700;color:#2563eb}
+.menu a{margin:0 14px;text-decoration:none;color:#475569;font-size:14px}
+.menu button{
+  background:#2563eb;color:#fff;border:none;
+  padding:9px 16px;border-radius:8px;cursor:pointer
+}
+
+/* HERO */
+.hero{
+  display:grid;grid-template-columns:1.1fr 1fr;
+  padding:70px;align-items:center;gap:40px
+}
+.hero h1{font-size:40px;margin-bottom:10px}
+.hero p{color:#64748b;font-size:15px}
+
+.converter{
+  background:#fff;padding:20px;border-radius:16px;
+  box-shadow:0 15px 40px rgba(0,0,0,.08)
+}
+textarea{
+  width:100%;height:120px;border:1px solid #e2e8f0;
+  border-radius:10px;padding:12px;resize:none
+}
+input,select{
+  width:100%;margin-top:10px;padding:10px;
+  border-radius:10px;border:1px solid #e2e8f0
+}
+.actions{display:flex;gap:10px;margin-top:12px}
+.actions button{
+  flex:1;padding:10px;border:none;border-radius:10px;
+  background:#2563eb;color:#fff;font-weight:600
+}
+
+/* FEATURES */
+.features{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  padding:40px 80px;gap:30px;text-align:center
+}
+.feature{
+  background:#fff;padding:22px;border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.06)
+}
+
+/* FORMATS */
+.formats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:35px;padding:50px 80px
+}
+.format{
+  background:#fff;padding:30px;border-radius:18px;
+  text-align:center;box-shadow:0 15px 35px rgba(0,0,0,.08)
+}
+.badge{
+  display:inline-block;padding:10px 18px;border-radius:12px;
+  color:#fff;font-weight:700;margin-bottom:10px
+}
+.doc{background:#3b82f6}
+.csv{background:#22c55e}
+.pdf{background:#ef4444}
+
+/* CTA */
+.cta{
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;padding:60px 80px
+}
+.cta button{
+  background:#2563eb;color:white;border:none;
+  padding:12px 20px;border-radius:10px
+}
+
+/* MOBILE */
+@media(max-width:900px){
+.hero,.cta{grid-template-columns:1fr}
+.features,.formats{grid-template-columns:1fr}
+.nav{padding:14px 20px}
+.hero,.features,.formats,.cta{padding:30px 20px}
+.menu{display:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="logo">Text to File Converter</div>
+  <div class="menu">
+    <a href="#home">Home</a>
+    <a href="#features">Features</a>
+    <a href="#formats">Formats</a>
+    <a href="#faq">FAQ</a>
+    <button onclick="goToConverter()">Get Started</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="home">
+<div>
+  <h1>Text to File Converter</h1>
+  <p>Convert your text into TXT, CSV or PDF instantly.</p>
+
+  <div class="converter" id="converterBox">
+    <textarea id="text" placeholder="Type your text here..."></textarea>
+    <input id="name" placeholder="file name (example)">
+    <select id="format">
+      <option value="txt">TXT File</option>
+      <option value="csv">CSV File</option>
+      <option value="pdf">PDF File</option>
+    </select>
+    <div class="actions">
+      <button onclick="convert()">Convert & Download</button>
+    </div>
+  </div>
+</div>
+
+<div>
+  <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" width="100%">
+</div>
+</div>
+
+<!-- FEATURES -->
+<div class="features" id="features">
+  <div class="feature">⚡ Fast Conversion</div>
+  <div class="feature">🔒 Secure Processing</div>
+  <div class="feature">📱 Mobile Friendly</div>
+</div>
+
+<!-- FORMATS -->
+<div class="formats" id="formats">
+  <div class="format">
+    <div class="badge doc">DOC</div>
+    <p>Text Documents</p>
+  </div>
+  <div class="format">
+    <div class="badge csv">CSV</div>
+    <p>Spreadsheet Files</p>
+  </div>
+  <div class="format">
+    <div class="badge pdf">PDF</div>
+    <p>Printable Files</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+<div>
+  <h2>Start Converting Now</h2>
+  <p>No signup required. 100% free tool.</p>
+  <button onclick="goToConverter()">Get Started</button>
+</div>
+<div>
+  <img src="https://cdn-icons-png.flaticon.com/512/4299/4299510.png" width="80%">
+</div>
+</div>
+
+<!-- FAQ -->
+<div id="faq" style="padding:40px 80px">
+<h2>FAQ</h2>
+<p>✔ Free forever</p>
+<p>✔ No data stored</p>
+<p>✔ Works on all devices</p>
+</div>
+
+<script>
+function convert(){
+  const text=document.getElementById("text").value
+  const name=document.getElementById("name").value||"file"
+  const format=document.getElementById("format").value
+
+  if(text.trim()=="") return alert("Enter text first")
+
+  if(format==="pdf"){
+    const {jsPDF}=window.jspdf
+    const pdf=new jsPDF()
+    const lines=pdf.splitTextToSize(text,180)
+    pdf.text(lines,15,20)
+    pdf.save(name+".pdf")
+    return
+  }
+
+  let type="text/plain"
+  if(format==="csv") type="text/csv"
+
+  const blob=new Blob([text],{type})
+  const url=URL.createObjectURL(blob)
+  const a=document.createElement("a")
+  a.href=url;a.download=name+"."+format
+  document.body.appendChild(a);a.click()
+  document.body.removeChild(a);URL.revokeObjectURL(url)
+}
+
+function goToConverter(){
+  document.getElementById("converterBox").scrollIntoView({behavior:"smooth"})
+  document.getElementById("text").focus()
+}
+</script>
+
+</body>
+</html>
